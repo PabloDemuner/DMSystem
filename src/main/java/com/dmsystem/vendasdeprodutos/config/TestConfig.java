@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Profile;
 
 import com.dmsystem.vendasdeprodutos.entities.Order;
 import com.dmsystem.vendasdeprodutos.entities.User;
+import com.dmsystem.vendasdeprodutos.entities.enums.OrderStatus;
 import com.dmsystem.vendasdeprodutos.repositories.OrderRepository;
 import com.dmsystem.vendasdeprodutos.repositories.UserRepository;
 
@@ -31,9 +32,9 @@ public class TestConfig implements CommandLineRunner{
 
 		User u2 = new User(null, "Alex Green", "alex@gmail.com", "777777752", "654321");
 		
-		Order o1 = new Order(null, Instant.parse("2021-03-20T04:12:25Z"), u1); 
-		Order o2 = new Order(null, Instant.parse("2021-03-20T04:12:25Z"), u2); 
-		Order o3 = new Order(null, Instant.parse("2021-03-20T04:12:25Z"), u1); 
+		Order o1 = new Order(null, Instant.parse("2021-03-20T04:12:25Z"), u1, OrderStatus.PAID); 
+		Order o2 = new Order(null, Instant.parse("2021-03-20T04:12:25Z"), u2, OrderStatus.WAITING_PAYMENT); 
+		Order o3 = new Order(null, Instant.parse("2021-03-20T04:12:25Z"), u1, OrderStatus.WAITING_PAYMENT); 
 		
 		
 		
