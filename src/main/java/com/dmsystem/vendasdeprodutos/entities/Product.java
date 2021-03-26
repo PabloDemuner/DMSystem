@@ -11,7 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_product")
@@ -33,6 +36,10 @@ public class Product implements Serializable{
 	@JoinTable(name = "tb_product_category", joinColumns = @JoinColumn(name = "product_id"),
 	inverseJoinColumns = @JoinColumn(name = "category_id"))
 	private Set<Category> categories = new HashSet<>();
+	
+	//Busca o ID da Classe OrderItem pq o ID tem as caracteristicas do pedido.
+		@OneToMany(mappedBy = "id.product")
+		private Set<OrderItem> items = new HashSet<>();
 	
 	public Product() {
 		
@@ -89,6 +96,16 @@ public class Product implements Serializable{
 
 	public Set<Category> getCategories() {
 		return categories;
+	}
+	
+	//@JsonIgnore Para não gerar loop infinito de pedido chamando pedido...
+	@JsonIgnore
+	public Set<Order> getOrders() {
+		Set<Order> set = new HashSet<>();
+		for (OrderItem x : items) {
+			set.add(x.getOrder());
+		}
+		return set;
 	}
 
 	@Override

@@ -5,6 +5,7 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.dmsystem.vendasdeprodutos.entities.enums.OrderStatus;
@@ -36,6 +38,14 @@ public class Order implements Serializable{
 	private User client;
 	
 	private Integer orderStatus;
+	
+	/*Associação 1 para 1 com o pagamento e o pagamento
+	 * cascade = CascadeType.ALL == mapeamento das entidades para ter um mesmo Id e código 
+	 * de pedido com o pagamento.
+	 */
+	
+	@OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+	private Payment payment;
 	
 	//Busca o ID da Classe OrderItem pq o ID tem as caracteristicas do pedido.
 	@OneToMany(mappedBy = "id.order")
@@ -86,6 +96,14 @@ public class Order implements Serializable{
 		this.orderStatus = orderStatus.getCode();
 	}
 	
+	public Payment getPayment() {
+		return payment;
+	}
+	
+	public void setPayment(Payment payment) {
+		this.payment = payment;
+	}
+
 	public Set<OrderItem> getItems() {
 		return items;
 	}
