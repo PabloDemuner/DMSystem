@@ -39,7 +39,7 @@ public class Order implements Serializable{
 	
 	private Integer orderStatus;
 	
-	/*Associação 1 para 1 com o pagamento e o pagamento
+	/*Associação 1 para 1 com o pagamento e o 
 	 * cascade = CascadeType.ALL == mapeamento das entidades para ter um mesmo Id e código 
 	 * de pedido com o pagamento.
 	 */
